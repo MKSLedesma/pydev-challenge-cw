@@ -26,7 +26,9 @@ Normalización de Magnitudes y Tratamiento de Valores Ausentes
         <img src="docs/dash_example.png" width="400">
         <img src="docs/na_example.png" width="400">
     </div>
+
     * Valor cero: Un valor explicito en cero se preserva numericamente como `0.0`. 
+    
 ## Criterio de Selección de Compañías
 * Fuente: Sector Drug Manufacturers - General en Stock Analysis 
     `https://stockanalysis.com/stocks/industry/drug-manufacturers-general/`
