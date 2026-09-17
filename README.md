@@ -5,6 +5,28 @@ Prueba técnica para puesto Python Developer Jr.
 Implementación inicial del pipeline asíncrono para extraccion de metricas de laboratorios farmaceuticos desde Stock Analysis.
 Se establece el cliente HTTP asincrono, el control de concurrencia y deteccion del árbol DOM de las estadísticas.
 
+# Iteración 2: Funciones auxiliares de parseo 
+Normalización de Magnitudes y Tratamiento de Valores Ausentes
+* Escala de Magnitudes Financieras:
+    Stock Analysis compacta cifras en tablas usando:
+    * `M`: factor de 10**6
+    * `B`: factor de 10**9
+    * `T`: factor de 10**12
+    Todas las cifras con simbolos monetarios (`$`) y abreviación de escala se normalizan a un `float` en su unidad base monetaria (USD).
+    <div align="center">
+        <img src="docs/t_sufix.png" width="400">
+        <img src="docs/b_sufix.png" width="400">
+        <img src="docs/m_sufix.png" width="400">
+    </div>
+
+* Diferenciación de Nulos vs. Ceros:
+    La pagina presenta valores faltantes bajo dos representaciones principales detectadas en las tablas: guión simple (`"-"`) y el string `"n/a"`.
+    * Dato no existente: Las cadenas `"-"`, `"n/a"` y vacios se normalizan a `None` en Python y se persistiran como NULL en SQL.
+    <div align="center">
+        <img src="docs/dash_example.png" width="400">
+        <img src="docs/na_example.png" width="400">
+    </div>
+    * Valor cero: Un valor explicito en cero se preserva numericamente como `0.0`. 
 ## Criterio de Selección de Compañías
 * Fuente: Sector Drug Manufacturers - General en Stock Analysis 
     `https://stockanalysis.com/stocks/industry/drug-manufacturers-general/`
