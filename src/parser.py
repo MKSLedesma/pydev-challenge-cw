@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 from bs4 import BeautifulSoup
 
 NULL_REPRESENTATIONS = {"-", "n/a", ""}
@@ -53,3 +53,17 @@ def parse_percentage(val: Optional[str]) -> Optional[float]:
     except ValueError:
         return None
 
+def extract_stock_data(html: str, ticker: str) -> Dict[str, Any]:
+    """"Parsea el HTML de /stadistics/ por ticker y extra los campos definidos."""
+    soup = BeautifulSoup(html, "html.parser")
+
+    name_elem = soup.find("div", class_="mb-0")
+    company_name = name_elem.text.strip() if name_elem else ticker.upper()
+
+    price_elem = soup.find("div", class_="text-4xl")
+    raw_price = price_elem.text.strip() if price_elem else None
+    main_share_price = (float(raw_price.replace(",", ""))) if raw_price else None
+
+    return {"company": company_name,
+            "ticker": ticker.upper(),
+            "main_share_price": main_share_price}
