@@ -55,6 +55,7 @@ def parse_percentage(val: Optional[str]) -> Optional[float]:
         return None
 
 def get_metric_value(soup, label):
+    """Busca una metrica en filas de tabla comparando la etiqueta de la primera celda"""
     for tr in soup.find_all("tr"):
         tds = tr.find_all("td")
         if len(tds) >= 2:
@@ -64,7 +65,7 @@ def get_metric_value(soup, label):
     return None
 
 def extract_stock_data(html: str, ticker: str) -> Dict[str, Any]:
-    """Parsea el HTML de /stadistics/ por ticker y extrae los campos definidos."""
+    """Parsea el HTML de /stadistics/ por ticker y normaliza las metricas requeridas."""
     soup = BeautifulSoup(html, "html.parser")
 
     # 1. Nombre de la compania
