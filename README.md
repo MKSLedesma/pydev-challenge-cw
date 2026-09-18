@@ -47,6 +47,13 @@ pip install -r requirements.txt
 
 ---
 
+## Limitaciones y Supuestos de Diseño
+* **Alcance de Mercado (NYSE):** 
+    La selección se reducio a emisores con cotización en el mercado estadounidense.
+    * **Homogeneidad de divisa:** Garantiza que el market cap y precios esten denominados en USD, evitando discrepancias y necesidad de APIs externas para comparacion de activos de forma equitativa.
+    * **Unicidad de claves:** Permite usar el ticker simple como clave primaria natural sin riesgo de colisiones entre distintos exchanges.
+    * **Consistencia de Endpoints:** Mantiene una estructura predecible de URLs en Stock Analysis.
+
 # Iteración 1: Scraper Base
 Implementación inicial del pipeline asíncrono para extraccion de metricas de laboratorios farmaceuticos desde Stock Analysis.
 Se establece el cliente HTTP asincrono, el control de concurrencia y deteccion del árbol DOM de las estadísticas.
