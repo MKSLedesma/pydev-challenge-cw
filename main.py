@@ -1,7 +1,10 @@
 import asyncio 
 import httpx
+
 from src.parser import extract_stock_data
 from src.scraper import StockScraper
+from src.models import PharmaMetricSchema
+from src.database import DataBaseManager
 
 TICKERS = ["lly", "jnj", "abbv", "mrk", "nvs", "azn", "amgn", "nvo", "gild", "pfe"]
 
@@ -14,17 +17,28 @@ async def process_ticker(scraper, client, ticker):
 
 async def run_pipeline():
     scraper = StockScraper()
+    db = DataBaseManager("sqlite:///pharma_pipeline.db")
+    valid_records: list[PharmaMetricSchema] = []
+
+    print(f"Iniciando extraccion para {len(TICKERS)} companias...")
 
     async with httpx.AsyncClient() as client:
         tasks = [process_ticker(scraper, client, ticker) for ticker in TICKERS]
-        results = await asyncio.gather(*tasks)
+        results = await asyncio.gather(*tasks, return_exceptions=True)
 
-    valid_records = [r for r in results if r is not None]
-    print(f"Extracción finalizada: {len(valid_records)}/{len(TICKERS)} procesados exitosamente.")
+        for ticker, res in zip(TICKERS, results):
+            if isinstance(res, Exception) or res is None:
+                print(f"[WARN] No se pudo obtener datos para {ticker}")
+                continue
 
-    return valid_records
+            try: 
+                record = PharmaMetricSchema.model_validate(res)
+                valid_records.append(record)
+            except Exception as e:
+                print(f"[ERR] Fallo el parseo/validacion para {ticker}: {e}")
+
+        saved_count = db.save_or_update_metrics(valid_records)
+        print(f"Pipeline completado: {saved_count} registros guardados.")
 
 if __name__ == "__main__":
     data = asyncio.run(run_pipeline())
-    for item in data:
-        print(item)
