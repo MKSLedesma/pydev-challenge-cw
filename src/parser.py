@@ -69,7 +69,7 @@ def extract_stock_data(html: str, ticker: str) -> Dict[str, Any]:
     soup = BeautifulSoup(html, "html.parser")
 
     # 1. Nombre de la compania
-    name_elem = soup.find("div", class_=lambda c: c and "font_bold" in c and "text-2xl" in c)
+    name_elem = soup.find("div", class_=lambda c: c and "font-bold" in c and "text-2xl" in c)
     raw_name = name_elem.get_text(strip=True) if name_elem else ticker.upper()
     if " (" in raw_name and raw_name.endswith(")"):
         company_name = raw_name.rsplit(" (", 1)[0].strip()
