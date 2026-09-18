@@ -51,6 +51,11 @@ class DataBaseManager:
             session.commit()
             return len(records)
 
+    def get_all_metrics(self):
+        with self.session_local() as session:
+            query = select(PharmaMetricORM).order_by(PharmaMetricORM.market_cap.desc().nulls_last())
+            return list(session.scalars(query).all())
+        
     def print_all_metrics(self):
         df = read_sql_table("pharma_metrics", con=self.engine)
         print(df.to_string(index=False))
