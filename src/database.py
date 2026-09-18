@@ -1,9 +1,10 @@
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import DateTime, Float, String, create_engine
+from sqlalchemy import DateTime, Float, String, create_engine, select
 from sqlalchemy.dialects.sqlite import insert
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 from src.models import PharmaMetricSchema
+from pandas import read_sql_table
 
 class Base(DeclarativeBase):
     pass
@@ -49,3 +50,7 @@ class DataBaseManager:
 
             session.commit()
             return len(records)
+
+    def print_all_metrics(self):
+        df = read_sql_table("pharma_metrics", con=self.engine)
+        print(df.to_string(index=False))

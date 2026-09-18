@@ -40,5 +40,7 @@ async def run_pipeline():
         saved_count = db.save_or_update_metrics(valid_records)
         print(f"Pipeline completado: {saved_count} registros guardados.")
 
+        db.print_all_metrics()
+
 if __name__ == "__main__":
     data = asyncio.run(run_pipeline())
