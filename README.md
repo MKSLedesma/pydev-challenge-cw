@@ -12,6 +12,7 @@ Normalización de Magnitudes y Tratamiento de Valores Ausentes
     * `M`: factor de 10**6
     * `B`: factor de 10**9
     * `T`: factor de 10**12
+
     Todas las cifras con simbolos monetarios (`$`) y abreviación de escala se normalizan a un `float` en su unidad base monetaria (USD).
     <div align="center">
         <img src="docs/t_sufix.png" width="400">
@@ -26,7 +27,7 @@ Normalización de Magnitudes y Tratamiento de Valores Ausentes
         <img src="docs/dash_example.png" width="400">
         <img src="docs/na_example.png" width="400">
     </div>
-
+    
     * Valor cero: Un valor explicito en cero se preserva numericamente como `0.0`. 
     
 ## Criterio de Selección de Compañías
@@ -39,7 +40,7 @@ Normalización de Magnitudes y Tratamiento de Valores Ausentes
     * `LLY`, `JNJ`, `ABBV`, `MRK`, `NVS`, `AZN`, `AMGN`, `NVO`, `GILD`, `PFE`
 
 ## Brechas de Cobertura
-* Filtro de mercado: Se consideraron unicamente compañias listadas en la bolsa de Nueva York. Laboratorios internacionales no se incluyeron en esta iteració para mantener un formato de URL y moneda homogéneo dentro de Stock Analysis.
+* Filtro de mercado: Se consideraron unicamente compañias listadas en la bolsa de Nueva York. Laboratorios internacionales no se incluyeron en esta iteración para mantener un formato de URL y moneda homogéneo dentro de Stock Analysis.
 
 ## Decisiones de Diseño y Asunciones Técnicas
 * Control de Concurrencia: Se implementó `asyncio.Semaphore(2)` a nivel de scraper para garantizar que no existan más de 2 peticiones HTTP activas de manera simultánea.
