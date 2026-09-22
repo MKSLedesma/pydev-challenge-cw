@@ -1,6 +1,7 @@
 import asyncio 
 import httpx
 import os
+import pandas as pd
 
 from src.parser import extract_stock_data
 from src.scraper import StockScraper
@@ -42,6 +43,10 @@ async def run_pipeline():
         print(f"Pipeline completado: {saved_count} registros guardados.")
 
         db.print_all_metrics()
+
+        results_df = pd.DataFrame([record.model_dump() for record in valid_records])
+        results_df.to_csv("pharma_metrics.csv", index=False)
+        print("Resultados exportados a pharma_metrics.csv")
 
 if __name__ == "__main__":
     data = asyncio.run(run_pipeline())
