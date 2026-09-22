@@ -31,13 +31,13 @@ pip install -r requirements.txt
 * **Fuente**: Sector Drug Manufacturers - General en Stock Analysis 
     `https://stockanalysis.com/stocks/industry/drug-manufacturers-general/`
 * **Fecha de consulta:** 18 de septiembre de 2026
-* **Criterio aplicado:** Selección de los 10 laboratorios farmacéuticos cotizados con mayor capitalización bursátil (`Market Cap`) listados directamente con ticker de EE. UU. (NYSE):
+* **Criterio aplicado:** Selección de los 10 laboratorios farmacéuticos cotizados con mayor capitalización bursátil (`Market Cap`) listados directamente en mercados de EE. UU.:
     * `LLY`, `JNJ`, `ABBV`, `MRK`, `NVS`, `AZN`, `AMGN`, `NVO`, `GILD`, `PFE`
 
 ---
 
 ## Brechas de Cobertura
-* **Filtro de mercado**: Se consideraron unicamente compañias listadas en la bolsa de Nueva York. Laboratorios internacionales no se incluyeron en esta iteración para mantener un formato de URL y moneda homogéneo dentro de Stock Analysis.
+* **Filtro de mercado**: Se consideraron únicamente compañías con ticker listado en mercados de EE. UU. Laboratorios sin ticker estadounidense no se incluyeron en esta iteración para mantener un formato de URL y moneda homogéneo dentro de Stock Analysis.
 
 ---
 
@@ -48,10 +48,10 @@ pip install -r requirements.txt
 ---
 
 ## Limitaciones y Supuestos de Diseño
-* **Alcance de Mercado (NYSE):** 
-    La selección se reducio a emisores con cotización en el mercado estadounidense.
+* **Alcance de Mercado (EE. UU.):**
+    La selección se redujo a emisores con cotización en mercados estadounidenses.
     * **Homogeneidad de divisa:** Garantiza que el market cap y precios esten denominados en USD, evitando discrepancias y necesidad de APIs externas para comparacion de activos de forma equitativa.
-    * **Unicidad de claves:** Permite usar el ticker simple como clave primaria natural sin riesgo de colisiones entre distintos exchanges.
+    * **Unicidad de claves:** Permite usar el ticker simple como clave primaria natural dentro del conjunto seleccionado.
     * **Consistencia de Endpoints:** Mantiene una estructura predecible de URLs en Stock Analysis.
 
 # Iteración 1: Scraper Base
