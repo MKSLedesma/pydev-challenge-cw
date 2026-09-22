@@ -30,9 +30,21 @@ pip install -r requirements.txt
 ## Criterio de Selección de Compañías
 * **Fuente**: Sector Drug Manufacturers - General en Stock Analysis 
     `https://stockanalysis.com/stocks/industry/drug-manufacturers-general/`
+* **Robots.txt consultado**: `https://stockanalysis.com/robots.txt`
 * **Fecha de consulta:** 18 de septiembre de 2026
 * **Criterio aplicado:** Selección de los 10 laboratorios farmacéuticos cotizados con mayor capitalización bursátil (`Market Cap`) listados directamente en mercados de EE. UU.:
     * `LLY`, `JNJ`, `ABBV`, `MRK`, `NVS`, `AZN`, `AMGN`, `NVO`, `GILD`, `PFE`
+
+## Consideraciones sobre robots.txt
+Al momento de la consulta, `robots.txt` bloqueaba las rutas `/e/` y `/p/` para los
+crawlers generales (`User-agent: *`) y bloqueaba completamente a `dotbot`, `BLEXBot`
+y `mj12bot`. El endpoint utilizado por este proyecto (`/stocks/{ticker}/statistics/`)
+no se encontraba dentro de esas rutas bloqueadas.
+El scraper limita la concurrencia a dos solicitudes mediante `asyncio.Semaphore(2)`, 
+no intenta evadir bloqueos y está destinado exclusivamente a este challenge.
+No se configuró un header especial para identificarse como un crawler autorizado ni
+para evadir restricciones, ya que el endpoint consultado no está bloqueado para
+`User-agent: *` en el `robots.txt` revisado.
 
 ---
 
