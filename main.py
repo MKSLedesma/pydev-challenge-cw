@@ -1,5 +1,6 @@
 import asyncio 
 import httpx
+import os
 
 from src.parser import extract_stock_data
 from src.scraper import StockScraper
@@ -17,7 +18,7 @@ async def process_ticker(scraper, client, ticker):
 
 async def run_pipeline():
     scraper = StockScraper()
-    db = DataBaseManager("sqlite:///pharma_pipeline.db")
+    db = DataBaseManager(os.getenv("DATABASE_URL", "sqlite:///pharma_pipeline.db"))
     valid_records: list[PharmaMetricSchema] = []
 
     print(f"Iniciando extraccion para {len(TICKERS)} companias...")
